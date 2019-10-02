@@ -1,10 +1,10 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Globomantics API server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run lint & nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "eslint": "^6.4.0",
-    "eslint-plugin-vue": "^5.2.3"
+    "eslint-plugin-vue": "^5.2.3",
+    "nodemon": "^1.19.3"
   }
 }

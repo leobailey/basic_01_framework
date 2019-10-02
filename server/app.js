@@ -1,16 +1,19 @@
 const express = require('express')
-const app = express() // gets handle to express
-const api = require('./api') // collects together all the routes in index.js
-const morgan = require('morgan') //for logging
+const app = express()             // gets handle to express function
+const api = require('./api')      // collects together all the routes in index.js //requires the contents of the api folder - api/index.js requires the lower level reoutes
+const morgan = require('morgan')  //for logging
 const bodyParser = require('body-parser') //for parsing html 
 
 app.set('port', (process.env.PORT || 8081)) // sets the port for the server to listen on
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false}))
-app.use('/api', api) //makes the app use the api routes
-app.use(express.static('static')) //set up express to have access to static files
 
-app.use(morgan('dev')) // set up the app to do logging for development
+
+// important location configuration
+app.use('/api', api)              //makes the app use the api routes // clear guidance to where the apis re
+app.use(express.static('static')) //set up express to have access to static files // clear guidance to where the static (front end?) files are
+
+app.use(morgan('dev'))            // set up the app to do logging for development
 
 app.use(function(req,res,next){             //handles requests to unknown resources
     const err = new Error('Not Found')
@@ -18,9 +21,10 @@ app.use(function(req,res,next){             //handles requests to unknown resour
     res.json(err)
 })
 
-const mongoose = require('mongoose')        //handle to mongo db
-mongoose.connect('mongodb://localhost:27017/globomantics') //connection string should be an environment variable
-const db = mongoose.connection  //grab the connection and set to a varibale
+// database configuration
+const mongoose = require('mongoose')                        //handle to mongo db
+mongoose.connect('mongodb://localhost:27017/globomantics')  //connection string should be an environment variable
+const db = mongoose.connection                              //grab the connection and set to a varibale
 
 db.on('error', console.error.bind(console, 'connection error:')) // logs any connection errors
 db.once('open', function () {                                    // handles the connection
